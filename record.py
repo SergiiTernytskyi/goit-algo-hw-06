@@ -13,17 +13,20 @@ class Record:
 
 
     def remove_phone(self, user_phone):
-        if user_phone in self.phones:
+        if any(str(phone) == user_phone for phone in self.phones):
             self.phones = [phone for phone in self.phones if str(phone) != user_phone]
         else:
-            raise PhoneFindError(f"Phone {user_phone} can`t be removed.")
+            raise PhoneFindError(f"Phone {user_phone} can`t be removed. Looks like it does not exist")
 
 
     def edit_phone(self, old_phone, new_phone):
-        for phone in self.phones:
-            if str(phone) == old_phone:
-                target_index = self.phones.index(phone)
-                self.phones[target_index] = Phone(new_phone)
+        if any(str(phone) == old_phone for phone in self.phones):
+            for phone in self.phones:
+                if str(phone) == old_phone:
+                    target_index = self.phones.index(phone)
+                    self.phones[target_index] = Phone(new_phone)
+        else:
+            raise PhoneFindError(f"Phone {old_phone} can`t be edited. Looks like it does not exist")
                  
 
     def find_phone(self, user_phone):
@@ -32,7 +35,7 @@ class Record:
         if len(phone_to_find) > 0:
              return phone_to_find[0]
         else:
-            raise PhoneFindError(f"Phone {user_phone} can`t be find. Looks like it does not exist")
+            raise PhoneFindError(f"Phone {user_phone} can`t be find. Looks like it does not exist.")
         
 
     def __str__(self):

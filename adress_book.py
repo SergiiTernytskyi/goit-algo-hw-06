@@ -1,5 +1,6 @@
 from collections import UserDict
 from errors import RecordFindError
+from record import Record
 
 class AddressBook(UserDict):
     def add_record(self, record):
@@ -8,7 +9,7 @@ class AddressBook(UserDict):
 
     def delete(self, name):
         if not name in self.data:
-            raise RecordFindError(f"User {name} can not be found.")        
+            raise RecordFindError(f"User {name} not found.")        
         self.data.pop(name)
 
 
@@ -17,4 +18,4 @@ class AddressBook(UserDict):
         if user:
             return user
         else:
-            raise RecordFindError(f"User {name} has not been found.") 
+            raise RecordFindError(f"User {name} not found.") 
